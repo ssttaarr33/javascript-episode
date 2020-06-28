@@ -1,0 +1,46 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <h1>ToDos</h1>
+    <ul id="todos"></ul>
+
+    <script type="text/javascript" language="javascript">
+        function createNode(element) {
+            return document.createElement(element);
+        }
+        function append(parent, element) {
+            return parent.appendChild(element);
+        }
+        const ul = document.getElementById('todos');
+        const url = 'https://jsonplaceholder.typicode.com/todos';
+        fetch(url)
+            .then((response) => response.json())
+            .then(function (data) {
+                let todos = data;
+                var completed = 0;
+                var notCompleted = 0;
+                todos.map(function (todo) {
+                    if (todo.completed) {
+                        completed++;
+                    } else {
+                        notCompleted++;
+                    }
+                });
+                var li = createNode('li'),
+                    span = createNode('span');
+                    span.innerHTML = `Completed: ${completed}; NotCompleted: ${notCompleted}`;
+                append(li, span);
+                append(ul, li);
+
+            })
+            .catch(function (error) {
+                console.log(JSON.stringify(error));
+            });
+    </script>
+</body>
+
+</html>
